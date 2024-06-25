@@ -1,12 +1,11 @@
 from flask import Flask 
+import root
+from controller_signup import * 
 
 app = Flask(__name__)
 
 def setup_routes():
-    import root
-    import controller_signup.about as about
-    import controller_signup.contact as contact
-    import controller_signup.signup as signup
+
     
     root.resgister_routes(app)
     about.register_routes(app)
