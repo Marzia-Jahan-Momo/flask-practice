@@ -1,4 +1,7 @@
+from model_signup.user_model_signup import user_model 
+obj = user_model()
+ 
 def register_route(app):
     @app.route("/user/signup")
     def signup():
-        return "This is sign up operation"
+        return obj.user_signup_model()

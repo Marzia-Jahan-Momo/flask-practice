@@ -1,1 +1,1 @@
-### Here changed the variable names of __init__.py into one single code with automatic OS, glob module 
+### Here changed added model module and integrate user_model_signup file with controller_signup module's signup.py file 
