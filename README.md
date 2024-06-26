@@ -1,1 +1,1 @@
-### Here changed added model module and integrate user_model_signup file with controller_signup module's signup.py file 
+### Here inseted, fetched data from mysql to show rows both in terminal and browser with string and list format. 
