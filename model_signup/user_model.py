@@ -10,13 +10,14 @@ class user_model():
                 password="momo",
                 database="pythondb",
                 port=3308)
+            self.conn.autocommit=True
             self.myc = self.conn.cursor(dictionary=True)
             print("Connection successful")
         except:
             print("Some error has occur")
     def user_getall_model(self):
         try:
-            
+            ## This is business logic
             self.myc.execute("SELECT * FROM user")
             fetching = self.myc.fetchall()
             # print(fetching) ->>> if you write print than it will show into terminal but if you write return then it will be shown into browser
@@ -25,9 +26,16 @@ class user_model():
             if len(fetching) > 0:
                 return json.dumps(fetching)
             else:
-                return "No result found" 
-        ## This is business logic
+                return "No result found"        
         except mysql.connector.Error as e:
             print(f"Error fetching data from MySQL: {e}")
             return []
         return "This is a user signup model"
+            
+        
+    
+    def user_addone_model(self, data):
+        self.myc.execute(f"INSERT INTO user(name, email, phone, role, password) VALUES('{data['name']}', '{data['email']}', '{data['phone']}', '{data['role']}', '{data['password']}')") ## after establishment of connection from client to controller, then controller to model, now we can create our sql query
+        #print(data)
+        print(data["email"]) ## to specific see any data
+        return "This is user_addone_model & successfully inserted data from client to db" 

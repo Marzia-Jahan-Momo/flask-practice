@@ -1,1 +1,1 @@
-### Here inseted, fetched data from mysql to show rows both in terminal and browser with string and list format. 
+### Here client give their information in a form, then controller picks that information and sent to model, then model gives that information to db to store.
