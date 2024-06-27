@@ -1,5 +1,6 @@
 import mysql.connector
 import json
+from flask import make_response
 class user_model():
     # connection esttablishment code in the __init__ or constructor because when object is called __init__ is automatically established, we need to connect with database through model then we must specify the user, host, password, database etc
     def __init__(self):
@@ -25,10 +26,10 @@ class user_model():
             
             if len(fetching) > 0:
                 # return json.dumps(fetching)  ## This will be string or text/html format
-                return {"Payload": fetching}    # This will be dictionary or json format
+                return make_response({"Payload": fetching}, 200)    # This will be dictionary or json format
                 # return fetching
             else:
-                return {"message":"No result found"}     ## generated JSON reply quickly      
+                return make_response({"message":"No result found"}, 204)     ## generated JSON reply quickly      
         except mysql.connector.Error as e:
             print(f"Error fetching data from MySQL: {e}")
             return {"Error":" There has an error"}
@@ -40,19 +41,19 @@ class user_model():
         self.myc.execute(f"INSERT INTO user(name, email, phone, role, password) VALUES('{data['name']}', '{data['email']}', '{data['phone']}', '{data['role']}', '{data['password']}')") ## after establishment of connection from client to controller, then controller to model, now we can create our sql query
         #print(data)
         print(data["email"]) ## to specific see any data
-        return {"Message":"This is user_addone_model & successfully inserted data from client to db"} ## generated JSON reply quickly      
+        return make_response({"Message":"This is user_addone_model & successfully inserted data from client to db"}, 201) ## generated JSON reply quickly      
     
     def user_update_model(self, data):
         self.myc.execute(f"UPDATE user SET name='{data['name']}', email='{data['email']}', phone='{data['phone']}', role='{data['role']}', password='{data['password']}' WHERE id={data['id']} ")
         if self.myc.rowcount > 0:            
-            return {"Message":"This is update statements done by PUT method"}
+            return make_response({"Message":"This is update statements done by PUT method"}, 201)
         else:
-            return {"Message":"Nothing to update"}
+            return make_response({"Message":"Nothing to update"}, 202)
     
     def user_delete_model(self, id):
         self.myc.execute(f"DELETE FROM user WHERE id={id}")
         if self.myc.rowcount >= 0:
-            return {"Message":"This is delete operation"}
+            return make_response({"Message":"This is delete operation"}, 200)
         else:
-            return {"Message":"Nothing to delete"}
+            return make_response({"Message":"Nothing to delete"}, 202)
         
