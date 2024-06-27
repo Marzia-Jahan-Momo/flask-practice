@@ -11,3 +11,7 @@ def register_route(app):
     def user_addone_controller():
         #print(request.form)  ## after checked its recived the values, now need to send this data form to mdoel
         return obj.user_addone_model(request.form)
+    
+    @app.route("/user/update", methods=["PUT"])
+    def user_update_controller():
+        return obj.user_update_model(request.form)

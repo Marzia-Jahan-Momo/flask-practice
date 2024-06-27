@@ -1,1 +1,1 @@
-### Here client give their information in a form, then controller picks that information and sent to model, then model gives that information to db to store.
+### Here updated the existing row in db which was inserted through master8 branch through PUT Method.

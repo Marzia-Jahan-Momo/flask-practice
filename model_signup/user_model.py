@@ -39,3 +39,10 @@ class user_model():
         #print(data)
         print(data["email"]) ## to specific see any data
         return "This is user_addone_model & successfully inserted data from client to db" 
+    
+    def user_update_model(self, data):
+        self.myc.execute(f"UPDATE user SET name='{data['name']}', email='{data['email']}', phone='{data['phone']}', role='{data['role']}', password='{data['password']}' WHERE id={data['id']} ")
+        if self.myc.rowcount > 0:            
+            return "This is update statements done by PUT method"
+        else:
+            return "Nothing to update"
