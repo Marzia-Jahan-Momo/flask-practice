@@ -26,7 +26,9 @@ class user_model():
             
             if len(fetching) > 0:
                 # return json.dumps(fetching)  ## This will be string or text/html format
-                return make_response({"Payload": fetching}, 200)    # This will be dictionary or json format
+                res = make_response({"Payload": fetching}, 200)
+                res.headers['Access-Control-Allow-Origin'] = "*"
+                return res     # This will show the full response object means respose body & status code, also allow any kind of access through *  
                 # return fetching
             else:
                 return make_response({"message":"No result found"}, 204)     ## generated JSON reply quickly      
