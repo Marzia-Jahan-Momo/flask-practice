@@ -81,12 +81,19 @@ class user_model():
             fetching = self.myc.fetchall()
             if len(fetching) > 0:
                 # return json.dumps(fetching)  ## This will be string or text/html format
-                res = make_response({"Payload": fetching, "Limit No": limit, "Page No": page}, 200)
+                res = make_response({"Payload": fetching}, 200)
                 return res     
             else:
                 return make_response({"message":"No result found"}, 204)     ## generated JSON reply quickly      
         except mysql.connector.Error as e:
             print(f"Error fetching data from MySQL: {e}")
             return {"Error":" There has an error"}
+        
+    def user_avatar_model(self, uid, filepath):
+        self.myc.execute(f"UPDATE user SET avatar='{filepath}' where id={uid}")
+        if self.myc.rowcount > 0:            
+            return make_response({"Message":"File uploaded successfully"}, 201)
+        else:
+            return make_response({"Message":"Nothing to update"}, 202)
         
   
