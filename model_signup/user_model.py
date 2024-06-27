@@ -70,4 +70,23 @@ class user_model():
             return make_response({"Message":"This is update statements done by PUT method"}, 201)
         else:
             return make_response({"Message":"Nothing to update"}, 202)
+        
+    def user_pagination_model(self, limit, page):
+        limit = int(limit)
+        page = int(page)
+        start = (page*limit) - limit
+        qry = f"SELECT * FROM user LIMIT {start}, {limit}"
+        try:
+            self.myc.execute(qry) 
+            fetching = self.myc.fetchall()
+            if len(fetching) > 0:
+                # return json.dumps(fetching)  ## This will be string or text/html format
+                res = make_response({"Payload": fetching}, 200)
+                return res     
+            else:
+                return make_response({"message":"No result found"}, 204)     ## generated JSON reply quickly      
+        except mysql.connector.Error as e:
+            print(f"Error fetching data from MySQL: {e}")
+            return {"Error":" There has an error"}
+        
   
