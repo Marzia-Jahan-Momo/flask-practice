@@ -22,14 +22,16 @@ class user_model():
             fetching = self.myc.fetchall()
             # print(fetching) ->>> if you write print than it will show into terminal but if you write return then it will be shown into browser
             #return fetching
-            # but we need to specify into string format with:
+            
             if len(fetching) > 0:
-                return json.dumps(fetching)
+                # return json.dumps(fetching)  ## This will be string or text/html format
+                return {"Payload": fetching}    # This will be dictionary or json format
+                # return fetching
             else:
-                return "No result found"        
+                return {"message":"No result found"}     ## generated JSON reply quickly      
         except mysql.connector.Error as e:
             print(f"Error fetching data from MySQL: {e}")
-            return []
+            return {"Error":" There has an error"}
         return "This is a user signup model"
             
         
@@ -38,19 +40,19 @@ class user_model():
         self.myc.execute(f"INSERT INTO user(name, email, phone, role, password) VALUES('{data['name']}', '{data['email']}', '{data['phone']}', '{data['role']}', '{data['password']}')") ## after establishment of connection from client to controller, then controller to model, now we can create our sql query
         #print(data)
         print(data["email"]) ## to specific see any data
-        return "This is user_addone_model & successfully inserted data from client to db" 
+        return {"Message":"This is user_addone_model & successfully inserted data from client to db"} ## generated JSON reply quickly      
     
     def user_update_model(self, data):
         self.myc.execute(f"UPDATE user SET name='{data['name']}', email='{data['email']}', phone='{data['phone']}', role='{data['role']}', password='{data['password']}' WHERE id={data['id']} ")
         if self.myc.rowcount > 0:            
-            return "This is update statements done by PUT method"
+            return {"Message":"This is update statements done by PUT method"}
         else:
-            return "Nothing to update"
+            return {"Message":"Nothing to update"}
     
     def user_delete_model(self, id):
         self.myc.execute(f"DELETE FROM user WHERE id={id}")
         if self.myc.rowcount >= 0:
-            return "This is delete operation"
+            return {"Message":"This is delete operation"}
         else:
-            return "Nothing to delete"
+            return {"Message":"Nothing to delete"}
         
