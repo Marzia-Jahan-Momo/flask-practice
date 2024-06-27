@@ -81,7 +81,7 @@ class user_model():
             fetching = self.myc.fetchall()
             if len(fetching) > 0:
                 # return json.dumps(fetching)  ## This will be string or text/html format
-                res = make_response({"Payload": fetching}, 200)
+                res = make_response({"Payload": fetching, "Limit No": limit, "Page No": page}, 200)
                 return res     
             else:
                 return make_response({"message":"No result found"}, 204)     ## generated JSON reply quickly      
