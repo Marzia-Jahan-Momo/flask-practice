@@ -59,3 +59,15 @@ class user_model():
         else:
             return make_response({"Message":"Nothing to delete"}, 202)
         
+    def user_patch_model(self, data, id):
+        qry = "UPDATE user SET "
+        w_id = f" WHERE id={id}"
+        for key in data:
+            qry += f"{key}='{data[key]}',"
+        qry = qry[:-1] + w_id
+        self.myc.execute(qry)
+        if self.myc.rowcount > 0:            
+            return make_response({"Message":"This is update statements done by PUT method"}, 201)
+        else:
+            return make_response({"Message":"Nothing to update"}, 202)
+  

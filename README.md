@@ -1,1 +1,1 @@
-## Here, All browser blocked access of 2 servers so, we used access control allow origin
+## We used PATCH method for updating particular value from key, not required of all key:value pair.
