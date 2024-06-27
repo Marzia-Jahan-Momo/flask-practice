@@ -46,3 +46,11 @@ class user_model():
             return "This is update statements done by PUT method"
         else:
             return "Nothing to update"
+    
+    def user_delete_model(self, id):
+        self.myc.execute(f"DELETE FROM user WHERE id={id}")
+        if self.myc.rowcount >= 0:
+            return "This is delete operation"
+        else:
+            return "Nothing to delete"
+        

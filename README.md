@@ -1,1 +1,2 @@
-### Here updated the existing row in db which was inserted through master8 branch through PUT Method.
+### Here las CRUD opearation remains that is DELETE.
+### Delete done though ID from client to controller, then controller sent the information to model, model sent to db.
