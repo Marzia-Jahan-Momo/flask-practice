@@ -1,6 +1,8 @@
 from model_signup.user_model import user_model 
 from flask import request
+from flask import send_file
 from datetime import datetime
+import os
 obj = user_model()
  
 def register_route(app):
@@ -31,11 +33,22 @@ def register_route(app):
     
     @app.route("/user/<uid>/upload/avatar", methods=["PUT"])
     def user_avatar_controller(uid):
-        file_obj = request.files["Avatar"]
+        file_obj = request.files["avatar"]
+        file_obj.save(f"upload/{file_obj.filename}")
         uniqueFileName = str(datetime.now().timestamp()).replace(".", "") ## this is epoch time format
         #return "This is user_upload_avatar_controller"
         fileNameSplit = file_obj.filename.split(".")
         extens = fileNameSplit[len(fileNameSplit)-1]
-        finalPath = f"uploads/{uniqueFileName}.{extens}"
+        finalPath = f"upload/{uniqueFileName}.{extens}"
         file_obj.save(finalPath)
         return obj.user_avatar_model(uid, finalPath)
+        return "THis is success"
+    
+    # last point 4. Creating an endpoint to read the file:
+    @app.route("/upload/<filename>")
+    def user_getavatar_controller(filename):
+        return send_file(f"/upload/{filename}")
+    
+    @app.route("/user/login", methods=["POST"])
+    def user_login_controller():
+        return obj.user_login_model(request.form) 

@@ -1,6 +1,8 @@
 import mysql.connector
 import json
 from flask import make_response
+from datetime import datetime, timedelta
+import jwt
 class user_model():
     # connection esttablishment code in the __init__ or constructor because when object is called __init__ is automatically established, we need to connect with database through model then we must specify the user, host, password, database etc
     def __init__(self):
@@ -95,5 +97,18 @@ class user_model():
             return make_response({"Message":"File uploaded successfully"}, 201)
         else:
             return make_response({"Message":"Nothing to update"}, 202)
+    
+    def user_login_model(self, data):
+        self.myc.execute(f"SELECT id, name, email, phone, role_id from user WHERE email='{data['email']}' and password='{data['password']}' ")
+        result = self.myc.fetchall()
+        userdata = result[0]
+        exp_time = datetime.now() + timedelta(minutes=15)
+        exp_epoch_time = int(exp_time.timestamp())
+        payload = {
+            "payload": userdata,
+            "exp": exp_epoch_time
+        }
+        jwt_token = jwt.encode(payload, "JahanMomo", algorithm="HS256") #JahanMomo this is encryption key that is stored in string format, anything you can set. 
+        return make_response({"Token": jwt_token}, 200)
         
   
