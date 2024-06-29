@@ -1,1 +1,1 @@
-Creating JWT using PyJWT
+## Creating decorator for JWT authentication, JWT Decode & Validate 

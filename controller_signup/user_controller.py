@@ -1,16 +1,20 @@
 from model_signup.user_model import user_model 
+from model_signup.auth_model import auth_model
 from flask import request
 from flask import send_file
 from datetime import datetime
 import os
 obj = user_model()
+auth = auth_model()
  
 def register_route(app):
     @app.route("/user/getall") ## first read operation
+    @auth.token_auth("/user/getall")
     def user_getall_controller():
         return obj.user_getall_model()
 
     @app.route("/user/addone", methods=["POST"]) ## from here recieved a form from client to controller
+    @auth.token_auth("/user/addone")
     def user_addone_controller():
         #print(request.form)  ## after checked its recived the values, now need to send this data form to mdoel
         return obj.user_addone_model(request.form)
